@@ -218,7 +218,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
     for (int i = 0; i < parts.length; i++) {
       crumbs.add(const Icon(Icons.chevron_right, size: 16, color: Colors.grey));
-      final path = '/' + parts.sublist(0, i + 1).join('/');
+      final path = '/${parts.sublist(0, i + 1).join('/')}';
       crumbs.add(
         GestureDetector(
           onTap: () => context.read<BrowserProvider>().navigateTo(path),
