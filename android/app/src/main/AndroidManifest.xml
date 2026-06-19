@@ -25,11 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-            <!-- Open ZIP files -->
+            <!-- ZIP: VIEW + SEND -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="file"/>
                 <data android:scheme="content"/>
                 <data android:mimeType="application/zip"/>
@@ -38,11 +38,11 @@
                 <data android:mimeType="multipart/x-zip"/>
             </intent-filter>
 
-            <!-- Open RAR files -->
+            <!-- RAR: VIEW + SEND -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="file"/>
                 <data android:scheme="content"/>
                 <data android:mimeType="application/x-rar-compressed"/>
@@ -50,79 +50,67 @@
                 <data android:mimeType="application/x-rar"/>
             </intent-filter>
 
-            <!-- Open 7z files -->
+            <!-- 7z: VIEW + SEND -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="file"/>
                 <data android:scheme="content"/>
                 <data android:mimeType="application/x-7z-compressed"/>
             </intent-filter>
 
-            <!-- Open TAR files -->
+            <!-- TAR: VIEW + SEND -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="file"/>
                 <data android:scheme="content"/>
                 <data android:mimeType="application/x-tar"/>
                 <data android:mimeType="application/tar"/>
             </intent-filter>
 
-            <!-- Open GZip files -->
+            <!-- GZip: VIEW + SEND -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="file"/>
                 <data android:scheme="content"/>
                 <data android:mimeType="application/gzip"/>
                 <data android:mimeType="application/x-gzip"/>
             </intent-filter>
 
-            <!-- Open BZip2 files -->
+            <!-- BZip2: VIEW + SEND -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="file"/>
                 <data android:scheme="content"/>
                 <data android:mimeType="application/x-bzip2"/>
             </intent-filter>
 
-            <!-- Open XZ files -->
+            <!-- XZ: VIEW + SEND -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="file"/>
                 <data android:scheme="content"/>
                 <data android:mimeType="application/x-xz"/>
             </intent-filter>
 
-            <!-- Catch-all: open by file extension pattern -->
+            <!-- Catch-all for generic files (WeChat often sends as octet-stream) -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="file"/>
                 <data android:scheme="content"/>
-                <data android:host="*"/>
+                <data android:mimeType="application/octet-stream"/>
                 <data android:mimeType="*/*"/>
-                <data android:pathPattern=".*\\.zip"/>
-                <data android:pathPattern=".*\\.rar"/>
-                <data android:pathPattern=".*\\.7z"/>
-                <data android:pathPattern=".*\\.tar"/>
-                <data android:pathPattern=".*\\.gz"/>
-                <data android:pathPattern=".*\\.tgz"/>
-                <data android:pathPattern=".*\\.bz2"/>
-                <data android:pathPattern=".*\\.tbz"/>
-                <data android:pathPattern=".*\\.xz"/>
-                <data android:pathPattern=".*\\.txz"/>
-                <data android:pathPattern=".*\\.zst"/>
-                <data android:pathPattern=".*\\.zstd"/>
             </intent-filter>
         </activity>
 
