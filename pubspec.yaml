@@ -43,21 +43,8 @@ dependencies:
   # State management
   provider: ^6.1.2
 
-  # File operations
-  file_picker: ^8.3.7
+  # File paths
   path: ^1.9.1
-
-  # Permissions (Android storage access)
-  permission_handler: ^11.4.0
-
-  # Share extracted files
-  share_plus: ^10.1.4
-
-  # File icons by extension
-  file_icon: ^1.0.0
-
-  # Human-readable file sizes
-  filesize: ^2.0.1
 
 dev_dependencies:
   flutter_test:
