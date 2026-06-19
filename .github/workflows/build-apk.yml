@@ -33,20 +33,54 @@ jobs:
       - name: Build APK
         run: flutter build apk --release --split-per-abi
 
-      - name: Upload arm64-v8a APK
+      - name: Upload arm64-v8a APK (GitHub)
         uses: actions/upload-artifact@v4
         with:
           name: free-archiver-arm64-v8a
           path: build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
 
-      - name: Upload armeabi-v7a APK
+      - name: Upload armeabi-v7a APK (GitHub)
         uses: actions/upload-artifact@v4
         with:
           name: free-archiver-armeabi-v7a
           path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
 
-      - name: Upload x86_64 APK
+      - name: Upload x86_64 APK (GitHub)
         uses: actions/upload-artifact@v4
         with:
           name: free-archiver-x86_64
           path: build/app/outputs/flutter-apk/app-x86_64-release.apk
+
+      - name: Upload APK to Gitee Release
+        env:
+          GITEE_TOKEN: 983be40cca7668e544f27f9a19c59a4b
+        run: |
+          set -e
+          TAG="v$(date +'%Y%m%d-%H%M%S')"
+          VERSION_NAME="build-${TAG}"
+
+          # Create a new release on Gitee
+          RELEASE_RESP=$(curl -s -X POST \
+            "https://gitee.com/api/v5/repos/c-xza/free-archiver/releases" \
+            -H "Content-Type: application/json" \
+            -d "{\"access_token\":\"$GITEE_TOKEN\",\"tag_name\":\"$TAG\",\"name\":\"$VERSION_NAME\",\"body\":\"自动构建 APK\n- arm64-v8a (大部分手机)\n- armeabi-v7a (旧32位)\n- x86_64 (模拟器)\"}")
+
+          RELEASE_ID=$(echo "$RELEASE_RESP" | python3 -c "import sys,json; print(json.load(sys.stdin).get('id',''))")
+          if [ -z "$RELEASE_ID" ]; then
+            echo "Failed to create Gitee release: $RELEASE_RESP"
+            exit 1
+          fi
+          echo "Release ID: $RELEASE_ID"
+
+          # Upload each APK
+          for ABI in arm64-v8a armeabi-v7a x86_64; do
+            APK_PATH="build/app/outputs/flutter-apk/app-${ABI}-release.apk"
+            FILE_NAME="free-archiver-${ABI}.apk"
+            echo "Uploading $FILE_NAME..."
+            curl -s -X POST \
+              "https://gitee.com/api/v5/repos/c-xza/free-archiver/releases/$RELEASE_ID/attach_files" \
+              -F "access_token=$GITEE_TOKEN" \
+              -F "file=@$APK_PATH;filename=$FILE_NAME" \
+              | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('name','FAIL: '+str(d)))"
+          done
+          echo "All APKs uploaded to Gitee release: https://gitee.com/c-xza/free-archiver/releases"
