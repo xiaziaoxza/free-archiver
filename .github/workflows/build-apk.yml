@@ -63,7 +63,7 @@ jobs:
           RELEASE_RESP=$(curl -s -X POST \
             "https://gitee.com/api/v5/repos/c-xza/free-archiver/releases" \
             -H "Content-Type: application/json" \
-            -d "{\"access_token\":\"$GITEE_TOKEN\",\"tag_name\":\"$TAG\",\"name\":\"$VERSION_NAME\",\"body\":\"自动构建 APK\n- arm64-v8a (大部分手机)\n- armeabi-v7a (旧32位)\n- x86_64 (模拟器)\"}")
+            -d "{\"access_token\":\"$GITEE_TOKEN\",\"tag_name\":\"$TAG\",\"name\":\"$VERSION_NAME\",\"body\":\"自动构建 APK\n- arm64-v8a (大部分手机)\n- armeabi-v7a (旧32位)\n- x86_64 (模拟器)\",\"target_commitish\":\"${{ github.sha }}\"}")
 
           RELEASE_ID=$(echo "$RELEASE_RESP" | python3 -c "import sys,json; print(json.load(sys.stdin).get('id',''))")
           if [ -z "$RELEASE_ID" ]; then
